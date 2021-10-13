@@ -1,7 +1,11 @@
+"""
+English to French To English translator
+"""
 import json
+import os
+
 from ibm_watson import LanguageTranslatorV3
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-import os
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -17,16 +21,19 @@ language_translator = LanguageTranslatorV3(
 
 language_translator.set_service_url(url)
 
-def english_to_french(engText):
+def english_to_french(eng_text):
     """
-    Takes english text as inpute and outputs fench text
+    Takes english text as input and outputs french text
     """
-    translation = language_translator.translate(text=engText, model_id='en-fr').get_result()
-    return translation['translations'][0]['translation']
+    if eng_text != '':
+        translation = language_translator.translate(text=eng_text, model_id='en-fr').get_result()
+        return translation['translations'][0]['translation']
 
-def french_to_english(frText):
+
+def french_to_english(fr_text):
     """
-    Takes english text as inpute and outputs fench text
+    Takes french text as input and outputs english text
     """
-    translation = language_translator.translate(text=frText, model_id='fr-en').get_result()
-    return translation['translations'][0]['translation']
+    if fr_text != '':
+        translation = language_translator.translate(text=fr_text, model_id='fr-en').get_result()
+        return translation['translations'][0]['translation']
